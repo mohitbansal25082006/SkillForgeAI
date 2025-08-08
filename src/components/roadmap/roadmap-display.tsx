@@ -1,47 +1,15 @@
+// src/components/roadmap/roadmap-display.tsx
 "use client";
 
-import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { ExternalLink, BookOpen, Video, FileText, Download, Send } from "lucide-react";
+import { ExternalLink, BookOpen, Video, FileText } from "lucide-react";
 import { Roadmap } from "@/types/roadmap";
-import { exportToPDF } from "@/utils/pdf-export";
-import { createNotionPage } from "@/lib/notion";
-import toast from "react-hot-toast";
 
 interface RoadmapDisplayProps {
   roadmap: Roadmap;
 }
 
 export function RoadmapDisplay({ roadmap }: RoadmapDisplayProps) {
-  const [isExporting, setIsExporting] = useState(false);
-
-  const handleExportPDF = async () => {
-    setIsExporting(true);
-    try {
-      await exportToPDF("roadmap-content", `${roadmap.title.replace(/\s+/g, '-')}.pdf`);
-      toast.success("PDF exported successfully!");
-    } catch (error) {
-      console.error("Error exporting PDF:", error);
-      toast.error("Failed to export PDF");
-    } finally {
-      setIsExporting(false);
-    }
-  };
-
-  const handleExportNotion = async () => {
-    setIsExporting(true);
-    try {
-      await createNotionPage(roadmap.title, roadmap);
-      toast.success("Roadmap exported to Notion!");
-    } catch (error) {
-      console.error("Error exporting to Notion:", error);
-      toast.error("Failed to export to Notion");
-    } finally {
-      setIsExporting(false);
-    }
-  };
-
   const getResourceIcon = (type: string) => {
     switch (type) {
       case "video":
@@ -60,45 +28,6 @@ export function RoadmapDisplay({ roadmap }: RoadmapDisplayProps) {
       <div className="bg-white border rounded-lg p-6">
         <h2 className="text-2xl font-bold mb-2">{roadmap.title}</h2>
         <p className="text-gray-600 mb-4">{roadmap.description}</p>
-        
-        <div className="flex space-x-2">
-          <Button 
-            onClick={handleExportPDF} 
-            disabled={isExporting}
-            variant="outline"
-            className="flex-1"
-          >
-            {isExporting ? (
-              <>
-                <Download className="mr-2 h-4 w-4 animate-spin" />
-                Exporting...
-              </>
-            ) : (
-              <>
-                <Download className="mr-2 h-4 w-4" />
-                Export as PDF
-              </>
-            )}
-          </Button>
-          
-          <Button 
-            onClick={handleExportNotion} 
-            disabled={isExporting}
-            className="flex-1"
-          >
-            {isExporting ? (
-              <>
-                <Send className="mr-2 h-4 w-4 animate-spin" />
-                Exporting...
-              </>
-            ) : (
-              <>
-                <Send className="mr-2 h-4 w-4" />
-                Export to Notion
-              </>
-            )}
-          </Button>
-        </div>
       </div>
 
       <div id="roadmap-content" className="space-y-6">
