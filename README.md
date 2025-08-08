@@ -99,7 +99,7 @@ The platform adapts to the user's goals, learning style, and current knowledge l
 - Supabase project
 ---
 ### Local Development Setup
-
+```bash
 # Clone the repository
 git clone https://github.com/YOUR_USERNAME/SkillForgeAI.git
 cd SkillForgeAI
@@ -121,6 +121,7 @@ cp .env.example .env.local
 npm run dev
 
 # Open your browser and navigate to http://localhost:3000
+```
 ---
 ### Database Setup
 ```sql
@@ -217,3 +218,4 @@ $$;
 -- Create index for better performance
 CREATE INDEX IF NOT EXISTS documents_embedding_idx ON public.documents
 USING hnsw (embedding vector_cosine_ops);
+```
