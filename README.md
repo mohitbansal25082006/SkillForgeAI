@@ -16,10 +16,6 @@ The platform adapts to the user's goals, learning style, and current knowledge l
 ## 🚀 Live Demo
 **[🔗 Visit SkillForge AI](https://skill-forge-ai.vercel.app/)**
 ---
-## 📋 Preview
-**[🔗 Preview]
-(preview4.png)**
----
 ## 🎯 Key Features
 ### 🧠 1. **AI-Powered Roadmap Generation**
 - **Smart Input Analysis**: Understands user's experience level and learning goals
