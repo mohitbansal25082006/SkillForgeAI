@@ -225,7 +225,7 @@ USING hnsw (embedding vector_cosine_ops);
 git init
 git add .
 git commit -m "Initial commit"
-git remote add origin https://github.com/YOUR_USERNAME/SkillForgeAI.git
+git remote add origin https://github.com/mohitbansal25082006/SkillForgeAI.git
 git push -u origin main
 
 # Deploy to Vercel
