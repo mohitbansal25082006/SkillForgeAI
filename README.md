@@ -14,7 +14,7 @@
 The platform adapts to the user's goals, learning style, and current knowledge level using **Large Language Models**, **Vector Databases**, and modern **Next.js 15 + ShadCN UI** stack.
 ---
 ## 🚀 Live Demo
-**[🔗 Visit SkillForge AI](https://skillforge-ai.vercel.app)**
+**[🔗 Visit SkillForge AI](https://skill-forge-ai.vercel.app/)**
 ---
 ## 🎯 Key Features
 ### 🧠 1. **AI-Powered Roadmap Generation**
