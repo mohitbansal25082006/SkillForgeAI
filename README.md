@@ -97,6 +97,7 @@ The platform adapts to the user's goals, learning style, and current knowledge l
 - Vercel account
 - OpenAI API key
 - Supabase project
+---
 ### Local Development Setup
 ```bash
 # Clone the repository
