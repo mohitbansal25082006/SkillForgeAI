@@ -1,3 +1,4 @@
+// app/dashboard/page.tsx
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -6,6 +7,8 @@ import { VideoSummarizer } from "@/components/video/video-summarizer";
 import { PDFSearch } from "@/components/pdf/pdf-search";
 import { Flashcards } from "@/components/learning/flashcards";
 import { Quiz } from "@/components/learning/quiz";
+import { UserStats } from "@/components/stats/user-stats";
+import { SmartRecommendations } from "@/components/recommendations/smart-recommendations";
 
 export default async function Dashboard() {
   const user = await currentUser();
@@ -49,6 +52,17 @@ export default async function Dashboard() {
   return (
     <div>
       <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
+      
+      {/* User Stats Section */}
+      <div className="mb-8">
+        <UserStats />
+      </div>
+
+      {/* Smart Recommendations Section */}
+      <div className="mb-8">
+        <SmartRecommendations />
+      </div>
+
       <Tabs defaultValue="roadmap" className="space-y-4">
         <TabsList className="grid grid-cols-4 w-full">
           <TabsTrigger value="roadmap">Roadmap</TabsTrigger>
