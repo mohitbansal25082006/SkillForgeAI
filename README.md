@@ -16,6 +16,10 @@ The platform adapts to the user's goals, learning style, and current knowledge l
 ## 🚀 Live Demo
 **[🔗 Visit SkillForge AI](https://skill-forge-ai.vercel.app/)**
 ---
+## 📋 Preview
+**[🔗 Preview]
+(https://github.com/YOUR_USERNAME/SkillForgeAI/blob/main/README.md)**
+---
 ## 🎯 Key Features
 ### 🧠 1. **AI-Powered Roadmap Generation**
 - **Smart Input Analysis**: Understands user's experience level and learning goals
@@ -219,3 +223,50 @@ $$;
 CREATE INDEX IF NOT EXISTS documents_embedding_idx ON public.documents
 USING hnsw (embedding vector_cosine_ops);
 ```
+---
+### 🚀 Deployment
+```bash
+# Prepare Repository
+git init
+git add .
+git commit -m "Initial commit"
+git remote add origin https://github.com/YOUR_USERNAME/SkillForgeAI.git
+git push -u origin main
+
+# Deploy to Vercel
+# 1. Go to vercel.com
+# 2. Click "New Project" → "Import Git Repository"
+# 3. Select your SkillForgeAI repository
+# 4. Configure environment variables (see below)
+# 5. Click "Deploy"
+
+# Post-Deployment Setup
+# 1. Update Clerk dashboard with your Vercel domain
+# 2. Configure Supabase for your production domain
+# 3. Test all features on the live site
+
+# Required environment variables for production:
+# NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+# CLERK_SECRET_KEY=your_clerk_secret_key
+# NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+# NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+# OPENAI_API_KEY=your_openai_api_key
+# UPLOADTHING_TOKEN=your_uploadthing_token
+```
+---
+### 🤝 Contributing
+```bash
+# We welcome contributions! Please follow these steps:
+# 1. Fork the repository
+# 2. Create a feature branch
+git checkout -b feature/amazing-feature
+# 3. Make your changes
+# 4. Commit your changes
+git commit -m 'Add amazing feature'
+# 5. Push to the branch
+git push origin feature/amazing-feature
+# 6. Open a Pull Request
+```
+---
+**Built with 💻 by Mohit Bansal**
+*"The future of learning is personalized, adaptive, and powered by AI."*
