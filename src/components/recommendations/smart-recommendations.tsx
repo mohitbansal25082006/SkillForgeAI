@@ -5,9 +5,10 @@ import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Lightbulb, BookOpen, Video, FileText, Target } from 'lucide-react';
+import { Lightbulb, BookOpen, Video, FileText, Target, ArrowRight } from 'lucide-react';
 import { getUserProgress, getUserStats } from '@/lib/database';
 import { useUser } from '@clerk/nextjs';
+import Link from 'next/link';
 
 interface UserStats {
   total_xp: number;
@@ -26,6 +27,7 @@ interface Recommendation {
   reason: string;
   priority: 'high' | 'medium' | 'low';
   estimatedTime: string;
+  actionUrl?: string;
 }
 
 export function SmartRecommendations() {
@@ -61,7 +63,8 @@ export function SmartRecommendations() {
           description: `You have ${incompleteModules.length} modules in progress`,
           reason: 'Maintain momentum in your current roadmap',
           priority: 'high',
-          estimatedTime: '2-3 hours'
+          estimatedTime: '2-3 hours',
+          actionUrl: '/dashboard'
         });
       }
 
@@ -74,7 +77,8 @@ export function SmartRecommendations() {
           description: 'Based on your progress, you\'re ready for more complex concepts',
           reason: 'You\'ve mastered the fundamentals',
           priority: 'medium',
-          estimatedTime: '5-10 hours'
+          estimatedTime: '5-10 hours',
+          actionUrl: '/dashboard'
         });
       }
 
@@ -87,7 +91,8 @@ export function SmartRecommendations() {
           description: 'Complete a quick module to maintain your learning streak',
           reason: `You're on a ${stats.current_streak}-day streak!`,
           priority: 'high',
-          estimatedTime: '30 minutes'
+          estimatedTime: '30 minutes',
+          actionUrl: '/dashboard'
         });
       }
 
@@ -100,7 +105,22 @@ export function SmartRecommendations() {
           description: 'Complete modules to earn XP and level up',
           reason: 'You\'re close to your first milestone',
           priority: 'high',
-          estimatedTime: '1 hour'
+          estimatedTime: '1 hour',
+          actionUrl: '/dashboard'
+        });
+      }
+
+      // New user recommendation
+      if (stats && stats.modules_completed === 0) {
+        recs.push({
+          id: 'get-started',
+          type: 'roadmap',
+          title: 'Generate Your First Learning Roadmap',
+          description: 'Start your learning journey by creating a personalized roadmap',
+          reason: 'Begin your learning adventure',
+          priority: 'high',
+          estimatedTime: '5 minutes',
+          actionUrl: '/dashboard'
         });
       }
 
@@ -127,6 +147,14 @@ export function SmartRecommendations() {
       case 'roadmap': return <Target className="h-4 w-4" />;
       case 'resource': return <FileText className="h-4 w-4" />;
       default: return <Lightbulb className="h-4 w-4" />;
+    }
+  };
+
+  const handleGetStarted = () => {
+    // Scroll to the roadmap form section
+    const roadmapForm = document.getElementById('roadmap-form');
+    if (roadmapForm) {
+      roadmapForm.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -166,14 +194,37 @@ export function SmartRecommendations() {
                     <span>{rec.estimatedTime}</span>
                   </div>
                 </div>
-                <Button size="sm">Start</Button>
+                {rec.actionUrl ? (
+                  <Link href={rec.actionUrl}>
+                    <Button size="sm">
+                      Start
+                      <ArrowRight className="h-3 w-3 ml-1" />
+                    </Button>
+                  </Link>
+                ) : (
+                  <Button size="sm">Start</Button>
+                )}
               </div>
             ))}
           </div>
         ) : (
           <div className="text-center py-8">
             <Lightbulb className="mx-auto h-12 w-12 text-gray-400 mb-4" />
-            <p className="text-gray-500">Complete some modules to get personalized recommendations!</p>
+            <h3 className="text-lg font-medium text-gray-700 mb-2">
+              Complete some modules to get personalized recommendations!
+            </h3>
+            <p className="text-gray-500 mb-6 max-w-md mx-auto">
+              Our AI-powered recommendation system analyzes your learning progress and suggests the best next steps for your educational journey.
+            </p>
+            <div className="space-y-3">
+              <Button onClick={handleGetStarted} className="w-full max-w-xs mx-auto">
+                Generate Your First Roadmap
+                <ArrowRight className="h-4 w-4 ml-2" />
+              </Button>
+              <p className="text-xs text-gray-400">
+                or complete existing modules to unlock personalized suggestions
+              </p>
+            </div>
           </div>
         )}
       </CardContent>
