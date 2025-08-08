@@ -17,8 +17,8 @@ The platform adapts to the user's goals, learning style, and current knowledge l
 **[🔗 Visit SkillForge AI](https://skill-forge-ai.vercel.app/)**
 ---
 ## 📋 Preview
-**[🔗 Preview]
-(https://github.com/YOUR_USERNAME/SkillForgeAI/blob/main/README.md)**
+**
+(preview4.png)**
 ---
 ## 🎯 Key Features
 ### 🧠 1. **AI-Powered Roadmap Generation**
