@@ -73,7 +73,6 @@ The platform adapts to the user's goals, learning style, and current knowledge l
 |------------|---------|
 | **PostgreSQL** | Primary database for user data and progress |
 | **Supabase Vector Store** | Document embeddings and semantic search |
-| **Redis** | Caching and session management (future) |
 | **Cloud Storage** | File storage for uploads and exports |
 ### 🚀 Deployment & DevOps
 | Technology | Purpose |
