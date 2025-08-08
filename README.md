@@ -83,5 +83,40 @@ The platform adapts to the user's goals, learning style, and current knowledge l
 | **GitHub** | Version control and collaboration |
 | **npm** | Package management |
 ---
-## 🏗️ Architecture
-### System Architecture
+### Data Flow
+1. **User Input** → **Frontend** → **API Routes** → **AI Services**
+2. **AI Generation** → **Database Storage** → **Frontend Display**
+3. **User Actions** → **Progress Tracking** → **Achievement System**
+4. **File Upload** → **Vector Storage** → **Semantic Search**
+---
+## 📦 Installation & Setup
+### Prerequisites
+- Node.js 18+ 
+- npm or yarn
+- GitHub account
+- Vercel account
+- OpenAI API key
+- Supabase project
+### Local Development Setup
+```bash
+# Clone the repository
+git clone https://github.com/YOUR_USERNAME/SkillForgeAI.git
+cd SkillForgeAI
+
+# Install dependencies
+npm install
+
+# Set up environment variables
+cp .env.example .env.local
+# Then add the following to .env.local:
+# NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+# CLERK_SECRET_KEY=your_clerk_secret_key
+# NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+# NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+# OPENAI_API_KEY=your_openai_api_key
+# UPLOADTHING_TOKEN=your_uploadthing_token
+
+# Run the development server
+npm run dev
+
+# Open your browser and navigate to http://localhost:3000
