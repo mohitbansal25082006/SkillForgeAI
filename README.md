@@ -17,7 +17,7 @@ The platform adapts to the user's goals, learning style, and current knowledge l
 **[🔗 Visit SkillForge AI](https://skill-forge-ai.vercel.app/)**
 ---
 ## 📋 Preview
-**
+**[🔗 Preview]
 (preview4.png)**
 ---
 ## 🎯 Key Features
