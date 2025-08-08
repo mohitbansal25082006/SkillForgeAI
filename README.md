@@ -99,7 +99,7 @@ The platform adapts to the user's goals, learning style, and current knowledge l
 - Supabase project
 ---
 ### Local Development Setup
-```bash
+
 # Clone the repository
 git clone https://github.com/YOUR_USERNAME/SkillForgeAI.git
 cd SkillForgeAI
@@ -121,3 +121,99 @@ cp .env.example .env.local
 npm run dev
 
 # Open your browser and navigate to http://localhost:3000
+---
+### Database Setup
+```sql
+-- Create Supabase project at supabase.com
+-- Then run this SQL setup script in the Supabase SQL Editor:
+
+-- Enable pgvector extension
+create extension if not exists vector;
+
+-- Create documents table
+CREATE TABLE IF NOT EXISTS public.documents (
+  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  content TEXT NOT NULL,
+  metadata JSONB,
+  embedding VECTOR(1536),
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Create user progress table
+CREATE TABLE IF NOT EXISTS public.user_progress (
+  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_id TEXT NOT NULL,
+  roadmap_id TEXT NOT NULL,
+  module_id TEXT NOT NULL,
+  completed BOOLEAN DEFAULT FALSE,
+  completed_at TIMESTAMP WITH TIME ZONE,
+  xp_earned INTEGER DEFAULT 0,
+  time_spent INTEGER DEFAULT 0,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Create user achievements table
+CREATE TABLE IF NOT EXISTS public.user_achievements (
+  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_id TEXT NOT NULL,
+  achievement_type TEXT NOT NULL,
+  achievement_name TEXT NOT NULL,
+  description TEXT,
+  icon TEXT,
+  unlocked_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Create user stats table
+CREATE TABLE IF NOT EXISTS public.user_stats (
+  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_id TEXT NOT NULL,
+  total_xp INTEGER DEFAULT 0,
+  level INTEGER DEFAULT 1,
+  current_streak INTEGER DEFAULT 0,
+  longest_streak INTEGER DEFAULT 0,
+  modules_completed INTEGER DEFAULT 0,
+  roadmaps_completed INTEGER DEFAULT 0,
+  last_activity TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Create matching function
+CREATE OR REPLACE FUNCTION match_documents(
+  query_embedding VECTOR(1536),
+  match_count INT,
+  filter JSONB DEFAULT '{}'::jsonb
+)
+RETURNS TABLE(
+  doc_id uuid,
+  content TEXT,
+  metadata JSONB,
+  embedding VECTOR(1536),
+  similarity FLOAT
+)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN QUERY
+  SELECT
+    d.id AS doc_id,
+    d.content,
+    d.metadata,
+    d.embedding,
+    1 - (d.embedding <=> query_embedding) AS similarity
+  FROM
+    public.documents d
+  WHERE
+    1 - (d.embedding <=> query_embedding) > 0.5
+    AND (filter->>'userId' IS NULL OR d.metadata->>'userId' = filter->>'userId')
+  ORDER BY
+    similarity DESC
+  LIMIT match_count;
+END;
+$$;
+
+-- Create index for better performance
+CREATE INDEX IF NOT EXISTS documents_embedding_idx ON public.documents
+USING hnsw (embedding vector_cosine_ops);
