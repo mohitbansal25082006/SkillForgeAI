@@ -9,6 +9,7 @@ import { Flashcards } from "@/components/learning/flashcards";
 import { Quiz } from "@/components/learning/quiz";
 import { UserStats } from "@/components/stats/user-stats";
 import { SmartRecommendations } from "@/components/recommendations/smart-recommendations";
+import { RecentActivity } from "@/components/activity/recent-activity";
 
 export default async function Dashboard() {
   const user = await currentUser();
@@ -77,13 +78,7 @@ export default async function Dashboard() {
               <RoadmapClient />
             </div>
             <div>
-              <div className="bg-white border rounded-lg p-6">
-                <h2 className="text-xl font-semibold mb-2">Recent Activity</h2>
-                <p className="text-gray-500">Your latest learning progress</p>
-                <div className="mt-4">
-                  <p className="text-gray-500">No activity yet. Generate your first roadmap!</p>
-                </div>
-              </div>
+              <RecentActivity />
             </div>
           </div>
         </TabsContent>

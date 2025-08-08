@@ -22,6 +22,8 @@ export default function RoadmapClient() {
 
   const handleRoadmapGenerated = (generatedRoadmap: Roadmap) => {
     setRoadmap(generatedRoadmap);
+    // Trigger a refresh of the recent activity
+    window.dispatchEvent(new CustomEvent('activity-updated'));
   };
 
   const loadUserProgress = useCallback(async () => {
@@ -40,6 +42,18 @@ export default function RoadmapClient() {
       loadUserProgress();
     }
   }, [user, roadmap, loadUserProgress]);
+
+  // Listen for activity updates
+  useEffect(() => {
+    const handleActivityUpdate = () => {
+      loadUserProgress();
+    };
+
+    window.addEventListener('activity-updated', handleActivityUpdate);
+    return () => {
+      window.removeEventListener('activity-updated', handleActivityUpdate);
+    };
+  }, [loadUserProgress]);
 
   return (
     <div className="space-y-6">
@@ -60,6 +74,10 @@ export default function RoadmapClient() {
                 xp: 10
               }))
             )}
+            onProgressUpdate={() => {
+              // Trigger activity refresh when progress is updated
+              window.dispatchEvent(new CustomEvent('activity-updated'));
+            }}
           />
           
           <RoadmapDisplay roadmap={roadmap} />

@@ -22,9 +22,10 @@ interface ModuleProgress {
 interface ProgressTrackerProps {
   roadmapId: string;
   modules: ModuleProgress[];
+  onProgressUpdate?: () => void;
 }
 
-export function ProgressTracker({ roadmapId, modules }: ProgressTrackerProps) {
+export function ProgressTracker({ roadmapId, modules, onProgressUpdate }: ProgressTrackerProps) {
   const { user } = useUser();
   const [moduleStates, setModuleStates] = useState<ModuleProgress[]>(modules);
   const [completedCount, setCompletedCount] = useState(0);
@@ -57,6 +58,11 @@ export function ProgressTracker({ roadmapId, modules }: ProgressTrackerProps) {
       );
 
       setCompletedCount(prev => newCompleted ? prev + 1 : prev - 1);
+
+      // Notify parent component of progress update
+      if (onProgressUpdate) {
+        onProgressUpdate();
+      }
 
       toast.success(newCompleted ? 'Module completed! +10 XP' : 'Module unmarked as completed');
     } catch (error) {
