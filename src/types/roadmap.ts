@@ -1,4 +1,3 @@
-// src/types/roadmap.ts
 export interface Resource {
   type: string;
   title: string;
